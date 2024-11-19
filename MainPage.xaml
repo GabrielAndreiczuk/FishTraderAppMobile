@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FishTraderAppMobile.MainPage"
+             xmlns:local="clr-namespace:FishTraderAppMobile;assembly=FishTraderAppMobile"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             xmlns:vms="clr-namespace:FishTraderAppMobile;assembly=FishTraderAppMobile"
+             xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             >
+
+    <ContentPage.BindingContext>
+        <vms:MainPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+            <GradientStop Color="#147287" Offset="0.3"/>
+            <GradientStop Color="#5DCEBE" Offset="0.9"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ContentPage.Resources>
+        <Style TargetType="Button" x:Key="btn-header">
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="BackgroundColor" Value="#174f5c"/>
+        </Style>
+        <Style TargetType="Button" x:Key="btn-Page">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontFamily" Value="System"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout>
+                <!--HEADER-->
+                <Grid RowDefinitions="60" ColumnDefinitions="50,*,50" BackgroundColor="White"
+                  Padding="20,10,20,10">
+                    <Button Grid.Column="0" Style="{StaticResource btn-header}" Text="+"/>
+                    <Image Grid.Column="1" Source="fishtrader.jpeg" HeightRequest="50"/>
+                    <Button Grid.Column="2" Style="{StaticResource btn-header}" Text="-"/>
+                </Grid>
+
+                <!--SELEÇÃO DE PÁGINA-->
+                <Grid RowDefinitions="50" ColumnDefinitions="50*,50*" Background="#174F5C">
+                    <Button x:Name="btnZoo" Grid.Column="0" Text="Dados Zootécnicos" TextColor="#5DCEBE"
+                        Style="{StaticResource btn-Page}" Clicked="btnZoo_Clicked"/>
+                    <Button x:Name="btnFin" Grid.Column="1" Text="Dados Financeiros" TextColor="White"
+                        Style="{StaticResource btn-Page}" Clicked="btnFin_Clicked"/>
+                </Grid>
+
+                <!--INDICADORES-->
+                <Grid RowDefinitions="85,20,85" ColumnDefinitions="*,20,*"            
+                      Padding="0" Margin="20,20,20,0" x:Name="teste">
+                    <Frame CornerRadius="18" Grid.Column="0" Grid.Row="0"  HeightRequest="85" BackgroundColor="White" 
+                           BorderColor="Transparent" Padding="0">
+                        <Grid  RowDefinitions="25,35,25" HeightRequest="85" HorizontalOptions="Fill">
+                            <Label Grid.Row="0" Text="Peso" TextColor="#5DCEBE" FontAttributes="Bold" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   x:Name="lblPeso"/>
+                            <Label Grid.Row="1" Text="0" TextColor="#174f5c" FontAttributes="Bold" FontSize="28"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Row="2" Text="(g)" TextColor="#174f5c" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+                        </Grid>
+                    </Frame>
+                    <Frame CornerRadius="18" Grid.Column="2" Grid.Row="0"  HeightRequest="85" BackgroundColor="White" 
+                           BorderColor="Transparent" Padding="0">
+                        <Grid  RowDefinitions="25,35,25" HeightRequest="85" HorizontalOptions="Fill">
+                            <Label Grid.Row="0" Text="Biomassa" TextColor="#5DCEBE" FontAttributes="Bold" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Row="1" Text="0" TextColor="#174f5c" FontAttributes="Bold" FontSize="28"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   x:Name="lblBiomassa"/>
+                            <Label Grid.Row="2" Text="(kg)" TextColor="#174f5c" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+                        </Grid>
+                    </Frame>
+                    <Frame CornerRadius="18" Grid.Column="0" Grid.Row="2"  HeightRequest="85" BackgroundColor="White" 
+                           BorderColor="Transparent" Padding="0">
+                        <Grid  RowDefinitions="25,35,25" HeightRequest="85" HorizontalOptions="Fill">
+                            <Label Grid.Row="0" Text="Sobrevivência" TextColor="#5DCEBE" FontAttributes="Bold" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Row="1" Text="0" TextColor="#174f5c" FontAttributes="Bold" FontSize="28"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Row="2" Text="(%)" TextColor="#174f5c" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+                        </Grid>
+                    </Frame>
+                    <Frame CornerRadius="18" Grid.Column="2" Grid.Row="2"  HeightRequest="85" BackgroundColor="White" 
+                           BorderColor="Transparent" Padding="0">
+                        <Grid  RowDefinitions="25,35,25" HeightRequest="85" HorizontalOptions="Fill">
+                            <Label Grid.Row="0" Text="N° Dias" TextColor="#5DCEBE" FontAttributes="Bold" FontSize="16"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Row="1" Text="0" TextColor="#174f5c" FontAttributes="Bold" FontSize="28"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        </Grid>
+                    </Frame>
+                </Grid>
+
+                <!---GRÁFICO BIOMASSA ESPERADA vs. BIOMASSA-->
+                <Frame BackgroundColor="#174F5C" CornerRadius="18" 
+                       Margin="20,20,20,0" Padding="0" HeightRequest="270" BorderColor="Transparent" x:Name="FrameChart">
+                    <Grid RowDefinitions="50,170,50" ColumnDefinitions="*" Background="Red">
+                        <Label Grid.Row="0" Text="BIOMASSA ESPERADA vs. BIOMASSA" Background="#174F5C" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        <lvc:CartesianChart
+                         Series="{Binding Series}"
+                         XAxes="{Binding XAxes}"
+                         YAxes="{Binding YAxes}"
+                         HeightRequest="170"
+                         Grid.Row="1"
+                         Background="White">
+                        </lvc:CartesianChart>
+                        <Label Grid.Row="2" Background="#174F5C"/>
+                    </Grid>
+                </Frame>
+
+                <!---GRÁFICO BIOMASSA vs. PESO-->
+                <Frame BackgroundColor="#174F5C" CornerRadius="18" 
+                   Margin="20,20,20,0" Padding="0" HeightRequest="270" BorderColor="Transparent">
+                    <Grid RowDefinitions="50,170,50" 
+                      ColumnDefinitions="*">
+                        <Label Grid.Row="0" Text="BIOMASSA vs. PESO" Background="#174F5C" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        <lvc:CartesianChart
+                         Series="{Binding Series2}"
+                         XAxes="{Binding XAxes}"
+                         YAxes="{Binding YAxes}"
+                         Grid.Row="1"
+                         Background="White">
+                        </lvc:CartesianChart>
+                        <Label Grid.Row="2" Background="#174F5C"/>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>
