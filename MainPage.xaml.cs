@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using Plugin.LocalNotification;
 using System.Timers;
 using Timer = System.Timers.Timer;
+using Plugin.LocalNotification.WindowsOption;
 
 namespace FishTraderAppMobile
 {
@@ -84,11 +85,26 @@ namespace FishTraderAppMobile
                             while (reader.Read())
                             {
                                 biomassaAtual = Convert.ToDouble(reader["Biomassa"]);
-                                idAtual = (int) (reader["ID_Biomassa"]);                                
+                                idAtual = (int) (reader["ID_Biomassa"]);
+                                idAtual -= 1;
 
-                                if (biomassa[idAtual-1] != biomassaAtual)
+                                if (biomassa[idAtual] == biomassaAtual)
                                 {
-                                    string msg = "Os valores foram modificados! Atualize a página...";
+                                    return;                                                                     
+                                }
+
+                                biomassa[idAtual] = biomassaAtual;
+                                double valorControle = 300000;
+                                string msg = "";
+
+                                if (biomassaAtual >= valorControle && !(biomassaAtual >= biomassaEsperada[idAtual]))
+                                {
+                                    msg = $"O valor de biomassa mês {meses[idAtual]} ultrapassou {valorControle}";
+                                    Notificar(msg);
+                                }
+                                if (biomassaAtual >= biomassaEsperada[idAtual])
+                                {
+                                    msg = $"O valor de biomassa mês {meses[idAtual]} ultrapassou o valor de biomassa esperado!";
                                     Notificar(msg);
                                 }
                             }
@@ -190,8 +206,10 @@ namespace FishTraderAppMobile
                 Android = new Plugin.LocalNotification.AndroidOption.AndroidOptions()
                 {
                     AutoCancel = true,
-                    IconSmallName = { ResourceName = "fishtrader" }
+                    IconSmallName = { ResourceName = "fishtrader" },
+                    //IconSmallName = Plugin.LocalNotification.AndroidOption.AndroidIcon("appicon")
                 }
+
             };
 
             LocalNotificationCenter.Current.Show(notificacao);
