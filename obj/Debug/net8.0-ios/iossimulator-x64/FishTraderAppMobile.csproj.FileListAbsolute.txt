@@ -267,7 +267,6 @@ C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-i
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-ios\iossimulator-x64\libxamarin-dotnet-nativeaot.a
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-ios\iossimulator-x64\libxamarin-dotnet.a
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-ios\iossimulator-x64\libxamarin-dotnet.dylib
-C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-ios\iossimulator-x64\build-signature\signature
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-ios\iossimulator-x64\mauiimage.inputs
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-ios\iossimulator-x64\mauifont.inputs
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-ios\iossimulator-x64\mauisplash.inputs

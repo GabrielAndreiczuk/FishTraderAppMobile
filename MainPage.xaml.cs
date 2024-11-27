@@ -29,6 +29,9 @@ namespace FishTraderAppMobile
         private ObservableCollection<double> biomassa = new ObservableCollection<double>();
         private ObservableCollection<double> biomassaEsperada = new ObservableCollection<double>();
         private ObservableCollection<string> meses = new ObservableCollection<string>();
+        private readonly MainPageViewModel viewModel;
+
+        private string dadosQuery = "SELECT * FROM public.\"Biomassa\"";
 
         //VARIÁVEIS PARA UTILIZAÇÃOD DE TIMER
         private Timer checkDataTimer;
@@ -42,14 +45,18 @@ namespace FishTraderAppMobile
             VerificarPerm();
 
             //CHAMADA MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
-            CarregarDados();
+            CarregarDados(dadosQuery + "order by \"ID_Mes\"");
 
             //CHAMADA MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
             GerarIndicadores();
 
+            viewModel = new MainPageViewModel();
             //CHAMADA MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
             BiomassaVsBiomassaEsp();
+            BiomassaVsPeso();            
+            BindingContext = viewModel;
 
+            /*
             checkDataTimer = new Timer(30000);
             checkDataTimer.Elapsed += (sender, e) =>
             {
@@ -57,7 +64,7 @@ namespace FishTraderAppMobile
                 CheckForDataChanges();
                 checkDataTimer.Start();
             };
-            checkDataTimer.Start();
+            checkDataTimer.Start();*/
         }
 
         //MÉTODO QUE VERIFICA PERMISSÃO DE NOTIFICAÇÃO AO USUÁRIO
@@ -123,7 +130,7 @@ namespace FishTraderAppMobile
         }
 
         //MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
-        private void CarregarDados()
+        private void CarregarDados(string query)
         {
             biomassa.Clear();
             biomassaEsperada.Clear();
@@ -132,11 +139,9 @@ namespace FishTraderAppMobile
             {
                 try
                 {
-                    connection.Open();
+                    connection.Open();                    
 
-                    string selectQuery = "SELECT * FROM public.\"Biomassa\" order by \"ID_Mes\";";
-
-                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
                     {
                         using (NpgsqlDataReader reader = command.ExecuteReader())
                         {
@@ -170,9 +175,7 @@ namespace FishTraderAppMobile
 
         //MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
         private void BiomassaVsBiomassaEsp()
-        {            
-            var viewModel = new MainPageViewModel();
-
+        {          
             var colunas = new ColumnSeries<double>
             {
                 Values = biomassa,
@@ -193,9 +196,32 @@ namespace FishTraderAppMobile
             colunas.ChartPointPointerDown += OnPointerDown;
             colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
 
-            viewModel.Series = new ISeries[]{ colunas , linhas };
+            viewModel.Series = new ISeries[]{ colunas , linhas };                          
+        }
 
-            BindingContext = viewModel;                          
+        private void BiomassaVsPeso()
+        {
+            var colunas = new ColumnSeries<double>
+            {
+                Values = biomassa,
+                Fill = new SolidColorPaint(new SKColor(93, 206, 190), 4),
+            };
+
+            var linhas = new LineSeries<double>()
+            {
+                Values = biomassaEsperada,
+                Fill = null,
+                Stroke = new SolidColorPaint(SKColors.Black),
+                GeometryStroke = new SolidColorPaint(SKColors.Black),
+                GeometryFill = new SolidColorPaint(SKColors.Black),
+                GeometrySize = 5,
+                LineSmoothness = 0
+            };
+
+            //colunas.ChartPointPointerDown += OnPointerDown;
+            //colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
+
+            viewModel.Series2 = new ISeries[] { colunas, linhas };
         }
 
         private void Notificar(string msg)
@@ -226,7 +252,7 @@ namespace FishTraderAppMobile
         private void btnZoo_Clicked(object sender, EventArgs e)
         {
             //UTILZADO ATUALMENTE COMO UM REFRESH DA PÁGINA
-            CarregarDados();
+            CarregarDados(dadosQuery + "order by \"ID_Mes\"");
             GerarIndicadores();
         }   
 
@@ -242,12 +268,17 @@ namespace FishTraderAppMobile
             if (point?.Visual is null) return;            
 
             string month = point.Coordinate.ToString();
-            string[] coordenadaSplit = month.Split('(',',');
+            string[] coordenadaSplit = month.Split('(',',',')');
             int index = int.Parse(coordenadaSplit[1]);
+            index += 1;
 
-            var xAxis = viewModel.XAxes[0];            
+            string filtro = $"WHERE \"ID_Mes\" = {index}";
+            CarregarDados(dadosQuery + filtro);
+            BiomassaVsPeso();
 
-            obterx(xAxis.Labels[index]);
+            //BiomassaVsPeso(index);
+
+            //var xAxis = viewModel.XAxes[0];
 
             point.Visual.Fill = new SolidColorPaint(SKColors.Red);
 
@@ -260,13 +291,5 @@ namespace FishTraderAppMobile
             point.Visual.Fill = null;
             chart.Invalidate();
         }
-
-        private void obterx(string x)
-        {
-
-            DisplayAlert("",x.ToString(),"OK");
-        }
-
-
     }
 }
