@@ -12,6 +12,8 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using LiveChartsCore.SkiaSharpView.Maui;
+using LiveChartsCore.Kernel;
+using System.Diagnostics;
 
 namespace FishTraderAppMobile
 {
@@ -73,7 +75,7 @@ namespace FishTraderAppMobile
                 Labeler = value => FormatCurrency(value)
             }
         };
-
+        
         public ISeries[] Series2 { get; set; }
         public ICartesianAxis[] XAxes2 { get; set; } =
         {

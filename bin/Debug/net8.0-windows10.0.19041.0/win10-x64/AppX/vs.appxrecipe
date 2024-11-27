@@ -30,7 +30,7 @@
     <AppXManifest Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-11-21T15:17:53.376</Modified>
+      <Modified>2024-11-26T19:48:06.442</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +44,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\FishTraderAppMobile.dll">
       <PackagePath>FishTraderAppMobile.dll</PackagePath>
-      <Modified>2024-11-21T15:17:52.735</Modified>
+      <Modified>2024-11-26T19:48:04.132</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>FishTraderAppMobile.exe</PackagePath>
-      <Modified>2024-11-21T15:17:52.751</Modified>
+      <Modified>2024-11-26T19:48:04.170</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>

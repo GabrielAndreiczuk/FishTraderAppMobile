@@ -12,6 +12,10 @@ using Plugin.LocalNotification;
 using System.Timers;
 using Timer = System.Timers.Timer;
 using Plugin.LocalNotification.WindowsOption;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
+using static System.Net.Mime.MediaTypeNames;
+using LiveChartsCore.SkiaSharpView.Maui;
 
 namespace FishTraderAppMobile
 {
@@ -84,7 +88,7 @@ namespace FishTraderAppMobile
                             int idAtual = 0;
                             while (reader.Read())
                             {
-                                biomassaAtual = Convert.ToDouble(reader["Biomassa"]);
+                                biomassaAtual = Convert.ToDouble(reader["Biomassa_Valor"]);
                                 idAtual = (int) (reader["ID_Biomassa"]);
                                 idAtual -= 1;
 
@@ -139,7 +143,7 @@ namespace FishTraderAppMobile
                             while (reader.Read())
                             {
                                 idDados.Add(Convert.ToDouble(reader["ID_Biomassa"]));
-                                biomassa.Add(Convert.ToDouble(reader["Biomassa"]));
+                                biomassa.Add(Convert.ToDouble(reader["Biomassa_Valor"]));
                                 biomassaEsperada.Add(Convert.ToDouble(reader["Biomassa_Esperada"]));
                                 meses.Add(reader["ID_Mes"].ToString());
                             }
@@ -169,24 +173,28 @@ namespace FishTraderAppMobile
         {            
             var viewModel = new MainPageViewModel();
 
-            viewModel.Series = new ISeries[]
+            var colunas = new ColumnSeries<double>
             {
-                new ColumnSeries<double>
-                {
-                    Values = biomassa,
-                    Fill = new SolidColorPaint(new SKColor(93, 206, 190), 4),
-                },
-                new LineSeries<double>()
-                {
-                    Values = biomassaEsperada,
-                    Fill = null,
-                    Stroke = new SolidColorPaint(SKColors.Black),
-                    GeometryStroke = new SolidColorPaint(SKColors.Black),
-                    GeometryFill = new SolidColorPaint(SKColors.Black),
-                    GeometrySize = 5,
-                    LineSmoothness = 0
-                },
+                Values = biomassa,
+                Fill = new SolidColorPaint(new SKColor(93, 206, 190), 4),
             };
+
+            var linhas = new LineSeries<double>()
+            {
+                Values = biomassaEsperada,
+                Fill = null,
+                Stroke = new SolidColorPaint(SKColors.Black),
+                GeometryStroke = new SolidColorPaint(SKColors.Black),
+                GeometryFill = new SolidColorPaint(SKColors.Black),
+                GeometrySize = 5,
+                LineSmoothness = 0
+            };
+
+            colunas.ChartPointPointerDown += OnPointerDown;
+            colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
+
+            viewModel.Series = new ISeries[]{ colunas , linhas };
+
             BindingContext = viewModel;                          
         }
 
@@ -227,7 +235,38 @@ namespace FishTraderAppMobile
             
         }
 
-        
+        private void OnPointerDown( IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
+        {
+            var viewModel = new MainPageViewModel();
+
+            if (point?.Visual is null) return;            
+
+            string month = point.Coordinate.ToString();
+            string[] coordenadaSplit = month.Split('(',',');
+            int index = int.Parse(coordenadaSplit[1]);
+
+            var xAxis = viewModel.XAxes[0];            
+
+            obterx(xAxis.Labels[index]);
+
+            point.Visual.Fill = new SolidColorPaint(SKColors.Red);
+
+            chartView.Invalidate();            
+        }
+
+        private void OnPointerHoverLost(IChartView chart, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
+        {
+            if (point?.Visual is null) return;
+            point.Visual.Fill = null;
+            chart.Invalidate();
+        }
+
+        private void obterx(string x)
+        {
+
+            DisplayAlert("",x.ToString(),"OK");
+        }
+
 
     }
 }
