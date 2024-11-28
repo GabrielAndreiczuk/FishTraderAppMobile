@@ -32,9 +32,10 @@
               "RelativeDocumentMoniker": "MainPage.xaml",
               "ToolTip": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\MainPage.xaml",
               "RelativeToolTip": "MainPage.xaml",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAAHQAAABnAAAAAAAAAA==",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAAAFgAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-11-01T15:02:02.741Z"
+              "WhenOpened": "2024-11-01T15:02:02.741Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -44,9 +45,10 @@
               "RelativeDocumentMoniker": "MainPageViewModel.cs",
               "ToolTip": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\MainPageViewModel.cs",
               "RelativeToolTip": "MainPageViewModel.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAcwDoAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowDEAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T15:03:13.275Z"
+              "WhenOpened": "2024-11-12T15:03:13.275Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -56,7 +58,7 @@
               "RelativeDocumentMoniker": "MainPage.xaml.cs",
               "ToolTip": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\MainPage.xaml.cs",
               "RelativeToolTip": "MainPage.xaml.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAywBMBAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAC8BAAAAAAAAAAAuwMIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-01T15:07:32.409Z",
               "EditorCaption": ""

@@ -77,23 +77,13 @@ namespace FishTraderAppMobile
         };
         
         public ISeries[] Series2 { get; set; }
-        public ICartesianAxis[] XAxes2 { get; set; } =
-        {
-            new Axis
-            {
-                // Inicialmente, as labels são definidas aqui como placeholders
-                Labels = new string[] { "jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez." },
-                LabelsRotation = 90,
-                TextSize = 7,
-                NamePadding = new LiveChartsCore.Drawing.Padding(0, 0)
-            }
-        };
+        public ICartesianAxis[] XAxes2 { get; set; } = { new Axis { } };
 
         public ICartesianAxis[] YAxes2 { get; set; } = {
             new Axis
             {
                 //Name = "Vendas projetadas (R$)",
-                NamePadding = new LiveChartsCore.Drawing.Padding(0, 15),
+                Padding = new LiveChartsCore.Drawing.Padding(5),
                 TextSize = 7,
                 LabelsPaint = new SolidColorPaint
                 {
@@ -103,11 +93,10 @@ namespace FishTraderAppMobile
                         SKFontStyleWeight.Bold,
                         SKFontStyleWidth.Normal,
                         SKFontStyleSlant.Italic)
-                },
-                SeparatorsPaint = new SolidColorPaint(SKColors.Red),
-                Labeler = value => FormatCurrency(value)
+                }
             }
         };
+
         public static string FormatCurrency(double value)
         {
             if (value >= 1_000_000)

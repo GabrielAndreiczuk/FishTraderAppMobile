@@ -85,7 +85,8 @@
                             <Label Grid.Row="0" Text="Sobrevivência" TextColor="#5DCEBE" FontAttributes="Bold" FontSize="16"
                                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                             <Label Grid.Row="1" Text="0" TextColor="#174f5c" FontAttributes="Bold" FontSize="28"
-                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   x:Name="lblSobrevivencia"/>
                             <Label Grid.Row="2" Text="(%)" TextColor="#174f5c" FontSize="16"
                                    HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
                         </Grid>
@@ -118,16 +119,16 @@
                     </Grid>
                 </Frame>
 
-                <!---GRÁFICO BIOMASSA vs. PESO-->
+                <!---GRÁFICO SOBREVIVÊNCIA vs. DIAS-->
                 <Frame BackgroundColor="#174F5C" CornerRadius="18" 
                    Margin="20,20,20,0" Padding="0" HeightRequest="270" BorderColor="Transparent">
                     <Grid RowDefinitions="50,170,50" 
                       ColumnDefinitions="*">
-                        <Label Grid.Row="0" Text="BIOMASSA vs. PESO" Background="#174F5C" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        <Label Grid.Row="0" Text="SOBREVIVÊNCIA vs. DIAS" Background="#174F5C" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                         <lvc:CartesianChart
                          Series="{Binding Series2}"
-                         XAxes="{Binding XAxes}"
-                         YAxes="{Binding YAxes}"
+                         XAxes="{Binding XAxes2}"
+                         YAxes="{Binding YAxes2}"
                          Grid.Row="1"
                          Background="White">
                         </lvc:CartesianChart>

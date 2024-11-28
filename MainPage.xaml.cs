@@ -25,13 +25,18 @@ namespace FishTraderAppMobile
         string connectionString = "Host=localhost;Username=postgres;Password=root;Database=TesteFishTrader";
 
         //LISTAS DE ARMAZENAMENTO DE INFORMAÇÕES
-        private ObservableCollection<double> idDados = new ObservableCollection<double>();
+        //private ObservableCollection<double> idDados = new ObservableCollection<double>();
         private ObservableCollection<double> biomassa = new ObservableCollection<double>();
         private ObservableCollection<double> biomassaEsperada = new ObservableCollection<double>();
-        private ObservableCollection<string> meses = new ObservableCollection<string>();
-        private readonly MainPageViewModel viewModel;
+        private ObservableCollection<string> biomassaMeses = new ObservableCollection<string>();
 
-        private string dadosQuery = "SELECT * FROM public.\"Biomassa\"";
+        private ObservableCollection<double> sobrevivencia = new ObservableCollection<double>();
+        private ObservableCollection<int> dias = new ObservableCollection<int>();
+
+        private ObservableCollection<string> sobrevivenciaMeses = new ObservableCollection<string>();
+        
+        private readonly MainPageViewModel viewModel;
+        
 
         //VARIÁVEIS PARA UTILIZAÇÃOD DE TIMER
         private Timer checkDataTimer;
@@ -45,7 +50,7 @@ namespace FishTraderAppMobile
             VerificarPerm();
 
             //CHAMADA MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
-            CarregarDados(dadosQuery + "order by \"ID_Mes\"");
+            CarregarDados(string.Empty);
 
             //CHAMADA MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
             GerarIndicadores();
@@ -53,7 +58,7 @@ namespace FishTraderAppMobile
             viewModel = new MainPageViewModel();
             //CHAMADA MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
             BiomassaVsBiomassaEsp();
-            BiomassaVsPeso();            
+            SobrevivenciaVsDias();            
             BindingContext = viewModel;
 
             /*
@@ -110,12 +115,12 @@ namespace FishTraderAppMobile
 
                                 if (biomassaAtual >= valorControle && !(biomassaAtual >= biomassaEsperada[idAtual]))
                                 {
-                                    msg = $"O valor de biomassa mês {meses[idAtual]} ultrapassou {valorControle}";
+                                    msg = $"O valor de biomassa mês {biomassaMeses[idAtual]} ultrapassou {valorControle}";
                                     Notificar(msg);
                                 }
                                 if (biomassaAtual >= biomassaEsperada[idAtual])
                                 {
-                                    msg = $"O valor de biomassa mês {meses[idAtual]} ultrapassou o valor de biomassa esperado!";
+                                    msg = $"O valor de biomassa mês {biomassaMeses[idAtual]} ultrapassou o valor de biomassa esperado!";
                                     Notificar(msg);
                                 }
                             }
@@ -130,30 +135,51 @@ namespace FishTraderAppMobile
         }
 
         //MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
-        private void CarregarDados(string query)
+        private void CarregarDados(string filter)
         {
             biomassa.Clear();
             biomassaEsperada.Clear();
+            biomassaMeses.Clear();
 
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 try
                 {
-                    connection.Open();                    
+                    connection.Open();
 
-                    using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+                    string selectQuery = "SELECT * FROM BiomassaBioEsperada" + filter;
+
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
                     {
                         using (NpgsqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                idDados.Add(Convert.ToDouble(reader["ID_Biomassa"]));
+                                //idDados.Add(Convert.ToDouble(reader["ID_Biomassa"]));
                                 biomassa.Add(Convert.ToDouble(reader["Biomassa_Valor"]));
                                 biomassaEsperada.Add(Convert.ToDouble(reader["Biomassa_Esperada"]));
-                                meses.Add(reader["ID_Mes"].ToString());
+                                biomassaMeses.Add(reader["mes_nome"].ToString());
                             }
                         }
                     }
+                    sobrevivencia.Clear();
+                    dias.Clear();
+                    sobrevivenciaMeses.Clear();
+                    selectQuery = "SELECT * FROM SobrevivenciaDiaMes" + filter;
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                sobrevivencia.Add(Convert.ToDouble(reader["Sobrevivencia_Valor"]));
+                                dias.Add(int.Parse(reader["Dias"].ToString()));
+                                sobrevivenciaMeses.Add(reader["mes_nome"].ToString());
+                            }
+                        }
+                    }
+
+                    GerarIndicadores();
                 }
                 catch (Exception ex)
                 {
@@ -168,9 +194,14 @@ namespace FishTraderAppMobile
         //MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
         private void GerarIndicadores()
         {
+            string txtMedia = "";
             double mediaBiomassa = biomassa.Average();
-            string txtMedia = MainPageViewModel.FormatCurrency(mediaBiomassa);
+            txtMedia = MainPageViewModel.FormatCurrency(mediaBiomassa);
             lblBiomassa.Text = txtMedia.ToString();
+
+            double mediaSobrevivencia = sobrevivencia.Average();
+            //txtMedia = MainPageViewModel.FormatCurrency(mediaBiomassa);
+            lblSobrevivencia.Text = $"{mediaSobrevivencia:F1}";
         }
 
         //MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
@@ -191,30 +222,40 @@ namespace FishTraderAppMobile
                 GeometryFill = new SolidColorPaint(SKColors.Black),
                 GeometrySize = 5,
                 LineSmoothness = 0
+            };         
+
+            viewModel.XAxes[0] = new Axis()
+            {
+                Labels = biomassaMeses,
+                LabelsRotation = 330,
+                TextSize = 8,
+                Padding = new LiveChartsCore.Drawing.Padding(-5, 15),
+                LabelsAlignment = LiveChartsCore.Drawing.Align.Middle,
+                ForceStepToMin = true,
+                MinStep = 1
             };
 
+            viewModel.Series = new ISeries[] { colunas, linhas };
             colunas.ChartPointPointerDown += OnPointerDown;
-            //colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
-
-            viewModel.Series = new ISeries[]{ colunas , linhas };                          
         }
 
-        private void BiomassaVsPeso()
+        private void SobrevivenciaVsDias()
         {
-            var colunas = new ColumnSeries<double>
+            var colunas = new ColumnSeries<int>
             {
-                Values = biomassa,
+                Values = dias,
                 Fill = new SolidColorPaint(new SKColor(93, 206, 190), 4),
+                Padding = 1
             };
 
             var linhas = new LineSeries<double>()
             {
-                Values = biomassaEsperada,
+                Values = sobrevivencia,
                 Fill = null,
                 Stroke = new SolidColorPaint(SKColors.Black),
                 GeometryStroke = new SolidColorPaint(SKColors.Black),
                 GeometryFill = new SolidColorPaint(SKColors.Black),
-                GeometrySize = 5,
+                GeometrySize = 3,
                 LineSmoothness = 0
             };
 
@@ -222,6 +263,16 @@ namespace FishTraderAppMobile
             //colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
 
             viewModel.Series2 = new ISeries[] { colunas, linhas };
+            viewModel.XAxes2[0] = new Axis()
+            {
+                Labels = sobrevivenciaMeses,
+                LabelsRotation = 330,
+                TextSize = 8,
+                Padding = new LiveChartsCore.Drawing.Padding(-5, 15),
+                LabelsAlignment = LiveChartsCore.Drawing.Align.Middle,
+                //ForceStepToMin = true,
+                //MinStep = 1
+            };
         }
 
         private void Notificar(string msg)
@@ -252,7 +303,7 @@ namespace FishTraderAppMobile
         private void btnZoo_Clicked(object sender, EventArgs e)
         {
             //UTILZADO ATUALMENTE COMO UM REFRESH DA PÁGINA
-            CarregarDados(dadosQuery + "order by \"ID_Mes\"");
+            CarregarDados(string.Empty);
             GerarIndicadores();
         }   
 
@@ -268,10 +319,11 @@ namespace FishTraderAppMobile
             string month = point.Coordinate.ToString();
             string[] coordenadaSplit = month.Split('(',',',')');
             int index = int.Parse(coordenadaSplit[1]);
-            index += 1;
 
-            string filtro = $"WHERE \"ID_Mes\" = {index}";
-            CarregarDados(dadosQuery + filtro);
+            string teste = biomassaMeses[index];
+
+            string filtro = $" WHERE \"mes_nome\" = '{biomassaMeses[index]}'";
+            CarregarDados(filtro);
 
             //var xAxis = viewModel.XAxes[0];
 
@@ -289,7 +341,7 @@ namespace FishTraderAppMobile
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            CarregarDados(dadosQuery + "order by \"ID_Mes\"");
+            CarregarDados(string.Empty);
         }
     }
 }
