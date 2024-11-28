@@ -25,18 +25,15 @@ namespace FishTraderAppMobile
         string connectionString = "Host=localhost;Username=postgres;Password=root;Database=TesteFishTrader";
 
         //LISTAS DE ARMAZENAMENTO DE INFORMAÇÕES
-        //private ObservableCollection<double> idDados = new ObservableCollection<double>();
         private ObservableCollection<double> biomassa = new ObservableCollection<double>();
         private ObservableCollection<double> biomassaEsperada = new ObservableCollection<double>();
         private ObservableCollection<string> biomassaMeses = new ObservableCollection<string>();
 
         private ObservableCollection<double> sobrevivencia = new ObservableCollection<double>();
-        private ObservableCollection<int> dias = new ObservableCollection<int>();
-
+        private ObservableCollection<double> dias = new ObservableCollection<double>();
         private ObservableCollection<string> sobrevivenciaMeses = new ObservableCollection<string>();
         
-        private readonly MainPageViewModel viewModel;
-        
+        private readonly MainPageViewModel viewModel;        
 
         //VARIÁVEIS PARA UTILIZAÇÃOD DE TIMER
         private Timer checkDataTimer;
@@ -72,66 +69,19 @@ namespace FishTraderAppMobile
             checkDataTimer.Start();*/
         }
 
-        //MÉTODO QUE VERIFICA PERMISSÃO DE NOTIFICAÇÃO AO USUÁRIO
-        private async void VerificarPerm()
+        private void btnZoo_Clicked(object sender, EventArgs e)
         {
-            var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await Permissions.RequestAsync<Permissions.PostNotifications>();
-            }
+            //UTILZADO ATUALMENTE COMO UM REFRESH DA PÁGINA
+            CarregarDados(string.Empty);
+            GerarIndicadores();
         }
-
-        private async void CheckForDataChanges()
+        private void btnFin_Clicked(object sender, EventArgs e)
         {
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
 
-                    string selectQuery = "SELECT * FROM public.\"Biomassa\" order by \"ID_Mes\";";
-
-                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-                    {
-                        using (NpgsqlDataReader reader = command.ExecuteReader())
-                        {
-                            double biomassaAtual = 0;
-                            int idAtual = 0;
-                            while (reader.Read())
-                            {
-                                biomassaAtual = Convert.ToDouble(reader["Biomassa_Valor"]);
-                                idAtual = (int) (reader["ID_Biomassa"]);
-                                idAtual -= 1;
-
-                                if (biomassa[idAtual] == biomassaAtual)
-                                {
-                                    return;                                                                     
-                                }
-
-                                biomassa[idAtual] = biomassaAtual;
-                                double valorControle = 300000;
-                                string msg = "";
-
-                                if (biomassaAtual >= valorControle && !(biomassaAtual >= biomassaEsperada[idAtual]))
-                                {
-                                    msg = $"O valor de biomassa mês {biomassaMeses[idAtual]} ultrapassou {valorControle}";
-                                    Notificar(msg);
-                                }
-                                if (biomassaAtual >= biomassaEsperada[idAtual])
-                                {
-                                    msg = $"O valor de biomassa mês {biomassaMeses[idAtual]} ultrapassou o valor de biomassa esperado!";
-                                    Notificar(msg);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }            
+        }
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            CarregarDados(string.Empty);
         }
 
         //MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
@@ -203,8 +153,6 @@ namespace FishTraderAppMobile
             //txtMedia = MainPageViewModel.FormatCurrency(mediaBiomassa);
             lblSobrevivencia.Text = $"{mediaSobrevivencia:F1}";
         }
-
-        //MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
         private void BiomassaVsBiomassaEsp()
         {          
             var colunas = new ColumnSeries<double>
@@ -236,12 +184,11 @@ namespace FishTraderAppMobile
             };
 
             viewModel.Series = new ISeries[] { colunas, linhas };
-            colunas.ChartPointPointerDown += OnPointerDown;
+            colunas.ChartPointPointerDown += BioVsBioEsp_Clicked;
         }
-
         private void SobrevivenciaVsDias()
         {
-            var colunas = new ColumnSeries<int>
+            var colunas = new ColumnSeries<double>
             {
                 Values = dias,
                 Fill = new SolidColorPaint(new SKColor(93, 206, 190), 4),
@@ -259,8 +206,7 @@ namespace FishTraderAppMobile
                 LineSmoothness = 0
             };
 
-            //colunas.ChartPointPointerDown += OnPointerDown;
-            //colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
+            colunas.ChartPointPointerDown += SobrevivenciaDias_Clicked;
 
             viewModel.Series2 = new ISeries[] { colunas, linhas };
             viewModel.XAxes2[0] = new Axis()
@@ -270,11 +216,97 @@ namespace FishTraderAppMobile
                 TextSize = 8,
                 Padding = new LiveChartsCore.Drawing.Padding(-5, 15),
                 LabelsAlignment = LiveChartsCore.Drawing.Align.Middle,
-                //ForceStepToMin = true,
-                //MinStep = 1
             };
         }
 
+        //EVENTOS DE CLIQUE DOS GRÁFICOS
+        private void BioVsBioEsp_Clicked( IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
+        {
+            if (point?.Visual is null) return;            
+
+            string month = point.Coordinate.ToString();
+            string[] coordenadaSplit = month.Split('(',',',')');
+            int index = int.Parse(coordenadaSplit[1]);
+
+            string teste = biomassaMeses[index];
+
+            string filtro = $" WHERE \"mes_nome\" = '{biomassaMeses[index]}'";
+            CarregarDados(filtro);       
+        }
+        private void SobrevivenciaDias_Clicked(IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
+        {
+            if (point?.Visual is null) return;
+
+            string month = point.Coordinate.ToString();
+            string[] coordenadaSplit = month.Split('(', ',', ')');
+            int index = int.Parse(coordenadaSplit[1]);
+
+            string teste = sobrevivenciaMeses[index];
+
+            string filtro = $" WHERE \"mes_nome\" = '{sobrevivenciaMeses[index]}'";
+            CarregarDados(filtro);          
+        }
+        
+        //MÉTODO QUE VERIFICA PERMISSÃO DE NOTIFICAÇÃO AO USUÁRIO
+        private async void VerificarPerm()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await Permissions.RequestAsync<Permissions.PostNotifications>();
+            }
+        }
+        private async void CheckForDataChanges()
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string selectQuery = "SELECT * FROM public.\"Biomassa\" order by \"ID_Mes\";";
+
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        {
+                            double biomassaAtual = 0;
+                            int idAtual = 0;
+                            while (reader.Read())
+                            {
+                                biomassaAtual = Convert.ToDouble(reader["Biomassa_Valor"]);
+                                idAtual = (int)(reader["ID_Biomassa"]);
+                                idAtual -= 1;
+
+                                if (biomassa[idAtual] == biomassaAtual)
+                                {
+                                    return;
+                                }
+
+                                biomassa[idAtual] = biomassaAtual;
+                                double valorControle = 300000;
+                                string msg = "";
+
+                                if (biomassaAtual >= valorControle && !(biomassaAtual >= biomassaEsperada[idAtual]))
+                                {
+                                    msg = $"O valor de biomassa mês {biomassaMeses[idAtual]} ultrapassou {valorControle}";
+                                    Notificar(msg);
+                                }
+                                if (biomassaAtual >= biomassaEsperada[idAtual])
+                                {
+                                    msg = $"O valor de biomassa mês {biomassaMeses[idAtual]} ultrapassou o valor de biomassa esperado!";
+                                    Notificar(msg);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
         private void Notificar(string msg)
         {
             //CONFIGURAÇÃO DE NOTIFICAÇÕES
@@ -298,50 +330,6 @@ namespace FishTraderAppMobile
             };
 
             LocalNotificationCenter.Current.Show(notificacao);
-        }
-
-        private void btnZoo_Clicked(object sender, EventArgs e)
-        {
-            //UTILZADO ATUALMENTE COMO UM REFRESH DA PÁGINA
-            CarregarDados(string.Empty);
-            GerarIndicadores();
-        }   
-
-        private void btnFin_Clicked(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void OnPointerDown( IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
-        {
-            if (point?.Visual is null) return;            
-
-            string month = point.Coordinate.ToString();
-            string[] coordenadaSplit = month.Split('(',',',')');
-            int index = int.Parse(coordenadaSplit[1]);
-
-            string teste = biomassaMeses[index];
-
-            string filtro = $" WHERE \"mes_nome\" = '{biomassaMeses[index]}'";
-            CarregarDados(filtro);
-
-            //var xAxis = viewModel.XAxes[0];
-
-            //point.Visual.Fill = new SolidColorPaint(SKColors.Red);
-
-            //chartView.Invalidate();            
-        }
-
-        private void OnPointerHoverLost(IChartView chart, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
-        {
-            if (point?.Visual is null) return;
-            point.Visual.Fill = null;
-            chart.Invalidate();
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            CarregarDados(string.Empty);
         }
     }
 }
