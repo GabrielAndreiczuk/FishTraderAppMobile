@@ -194,7 +194,7 @@ namespace FishTraderAppMobile
             };
 
             colunas.ChartPointPointerDown += OnPointerDown;
-            colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
+            //colunas.ChartPointPointerHoverLost += OnPointerHoverLost;
 
             viewModel.Series = new ISeries[]{ colunas , linhas };                          
         }
@@ -263,8 +263,6 @@ namespace FishTraderAppMobile
 
         private void OnPointerDown( IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
         {
-            var viewModel = new MainPageViewModel();
-
             if (point?.Visual is null) return;            
 
             string month = point.Coordinate.ToString();
@@ -274,15 +272,12 @@ namespace FishTraderAppMobile
 
             string filtro = $"WHERE \"ID_Mes\" = {index}";
             CarregarDados(dadosQuery + filtro);
-            BiomassaVsPeso();
-
-            //BiomassaVsPeso(index);
 
             //var xAxis = viewModel.XAxes[0];
 
-            point.Visual.Fill = new SolidColorPaint(SKColors.Red);
+            //point.Visual.Fill = new SolidColorPaint(SKColors.Red);
 
-            chartView.Invalidate();            
+            //chartView.Invalidate();            
         }
 
         private void OnPointerHoverLost(IChartView chart, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
@@ -290,6 +285,11 @@ namespace FishTraderAppMobile
             if (point?.Visual is null) return;
             point.Visual.Fill = null;
             chart.Invalidate();
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            CarregarDados(dadosQuery + "order by \"ID_Mes\"");
         }
     }
 }
