@@ -112,14 +112,15 @@
                             <Label Text="Filtrar por mês" HeightRequest="30" VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="Center"/>
                             <Picker x:Name="pickerMes"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                                    HeightRequest="45">
+                                    HeightRequest="45" SelectedIndexChanged="pickerMes_SelectedIndexChanged">
+                                <!--
                                 <Picker.ItemsSource>
                                     <x:Array Type="{x:Type x:String}">
                                         <x:String>Opção 1</x:String>
                                         <x:String>Opção 2</x:String>
                                         <x:String>Opção 3</x:String>
                                     </x:Array>
-                                </Picker.ItemsSource>
+                                </Picker.ItemsSource>-->
                             </Picker>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Padding="0" Grid.Row="1" Grid.Column="1" HeightRequest="75"

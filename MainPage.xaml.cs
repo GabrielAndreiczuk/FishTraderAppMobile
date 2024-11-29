@@ -16,6 +16,7 @@ using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
 using static System.Net.Mime.MediaTypeNames;
 using LiveChartsCore.SkiaSharpView.Maui;
+using System;
 
 namespace FishTraderAppMobile
 {
@@ -24,7 +25,11 @@ namespace FishTraderAppMobile
         //STRING PARA CONEXÃO COM O BANCO DE DADOS
         string connectionString = "Host=localhost;Username=postgres;Password=root;Database=TesteFishTrader";
 
-        //LISTAS DE ARMAZENAMENTO DE INFORMAÇÕES
+        //LISTAS DE ARMAZENAMENTO DE INFORMAÇÕES        
+        public List<string> mesesLista = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        public List<string> mesesListaAbv = ["jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."];
+        public List<string> semanasLista = new List<string>();
+
         private ObservableCollection<double> biomassa = new ObservableCollection<double>();
         private ObservableCollection<double> biomassaEsperada = new ObservableCollection<double>();
         private ObservableCollection<string> biomassaMeses = new ObservableCollection<string>();
@@ -51,6 +56,13 @@ namespace FishTraderAppMobile
 
             //CHAMADA MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
             GerarIndicadores();
+
+            for (int i = 1; i <= 52; i++)
+            {
+                semanasLista.Add($"Semana {i.ToString()}");
+            }
+            pickerSemana.ItemsSource = semanasLista;
+            pickerMes.ItemsSource = mesesLista;
 
             viewModel = new MainPageViewModel();
             //CHAMADA MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
@@ -82,6 +94,12 @@ namespace FishTraderAppMobile
         private void Button_Clicked(object sender, EventArgs e)
         {
             CarregarDados(string.Empty);
+        }
+        private void pickerMes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //DisplayAlert("", mesesListaAbv[pickerMes.SelectedIndex], "OK");
+            string filtro = $" WHERE \"mes_nome\" = '{mesesListaAbv[pickerMes.SelectedIndex]}'";
+            CarregarDados(filtro);
         }
 
         //MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
