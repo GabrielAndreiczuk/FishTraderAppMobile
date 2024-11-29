@@ -122,7 +122,7 @@ namespace FishTraderAppMobile
                         {
                             while (reader.Read())
                             {
-                                sobrevivencia.Add(Convert.ToDouble(reader["Sobrevivencia_Valor"]));
+                                sobrevivencia.Add(double.Parse(reader["Sobrevivencia_Valor"].ToString()));
                                 dias.Add(int.Parse(reader["Dias"].ToString()));
                                 sobrevivenciaMeses.Add(reader["mes_nome"].ToString());
                             }

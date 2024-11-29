@@ -102,21 +102,43 @@
                     </Frame>
                 </Grid>
 
-                <Grid RowDefinitions="70" ColumnDefinitions="*,*" HeightRequest="70" Margin="20,20,20,0">
-                    <Frame CornerRadius="18" HeightRequest="70" Grid.Row="0" Grid.Column="0" BackgroundColor="#174f5c"
-                           BorderColor="Transparent" Padding="0">
-                        <Picker x:Name="pickerMes"  HorizontalTextAlignment="Center">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>Opção 1</x:String>
-                                    <x:String>Opção 2</x:String>
-                                    <x:String>Opção 3</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
-                    </Frame>
-                </Grid>
-                
+                <Frame CornerRadius="18" HeightRequest="115" Grid.Row="1" BackgroundColor="White"
+                        BorderColor="Transparent" Padding="0" Margin="20,20,20,0">
+                    <Grid RowDefinitions="40,75" ColumnDefinitions="50*,50*"
+                          HorizontalOptions="FillAndExpand">
+                        <Button Grid.Row="0" Grid.Column="1" Text="Reset"/>
+                        <StackLayout Orientation="Vertical" Padding="0" Grid.Row="1" Grid.Column="0" HeightRequest="75"
+                                     Background="#174f5c">
+                            <Label Text="Filtrar por mês" HeightRequest="30" VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"/>
+                            <Picker x:Name="pickerMes"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                    HeightRequest="45">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Opção 1</x:String>
+                                        <x:String>Opção 2</x:String>
+                                        <x:String>Opção 3</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Padding="0" Grid.Row="1" Grid.Column="1" HeightRequest="75"
+                                     Background="#174f5c">
+                            <Label Text="Filtrar por semana" HeightRequest="30" VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"/>
+                            <Picker x:Name="pickerSemana"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                    HeightRequest="45">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Opção 1</x:String>
+                                        <x:String>Opção 2</x:String>
+                                        <x:String>Opção 3</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </StackLayout>
+                    </Grid>
+                </Frame>              
 
                 <!---GRÁFICO BIOMASSA ESPERADA vs. BIOMASSA-->
                 <Frame BackgroundColor="#174F5C" CornerRadius="18" 
