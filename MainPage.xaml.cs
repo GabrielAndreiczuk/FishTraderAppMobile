@@ -54,15 +54,15 @@ namespace FishTraderAppMobile
             //CHAMADA MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
             CarregarDados(string.Empty);
 
-            //CHAMADA MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
-            GerarIndicadores();
-
             for (int i = 1; i <= 52; i++)
             {
                 semanasLista.Add($"Semana {i.ToString()}");
             }
             pickerSemana.ItemsSource = semanasLista;
             pickerMes.ItemsSource = mesesLista;
+
+            //CHAMADA MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
+            GerarIndicadores();            
 
             viewModel = new MainPageViewModel();
             //CHAMADA MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
@@ -81,6 +81,7 @@ namespace FishTraderAppMobile
             checkDataTimer.Start();*/
         }
 
+        //EVENTOS BOTÕES E ITENS DA TELA
         private void btnZoo_Clicked(object sender, EventArgs e)
         {
             //UTILZADO ATUALMENTE COMO UM REFRESH DA PÁGINA
@@ -100,6 +101,10 @@ namespace FishTraderAppMobile
             //DisplayAlert("", mesesListaAbv[pickerMes.SelectedIndex], "OK");
             string filtro = $" WHERE \"mes_nome\" = '{mesesListaAbv[pickerMes.SelectedIndex]}'";
             CarregarDados(filtro);
+        }
+        private void pickerSemana_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         //MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
