@@ -14,7 +14,7 @@
     <MauiXaml Update="Login.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
-    <MauiXaml Update="Protegida.xaml">
+    <MauiXaml Update="Cadastro.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
   </ItemGroup>

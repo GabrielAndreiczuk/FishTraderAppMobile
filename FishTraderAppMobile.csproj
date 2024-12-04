@@ -70,4 +70,19 @@
 		<PackageReference Include="Plugin.LocalNotification" Version="11.1.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Cadastro.xaml.cs">
+	    <DependentUpon>Cadastro.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Login.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Cadastro.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
