@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FishTraderAppMobile")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+b479bcf5c17e4d429367b3516b8fcd2566a3d330")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+45fdb6b1dcb5e48d8c3e666e68fe967b48c30d22")]
 [assembly: System.Reflection.AssemblyProductAttribute("FishTraderAppMobile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FishTraderAppMobile")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

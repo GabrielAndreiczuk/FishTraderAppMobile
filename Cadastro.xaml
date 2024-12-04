@@ -13,8 +13,8 @@
 
     <ContentPage.Content>
         <VerticalStackLayout VerticalOptions="Center">
-            <Frame BackgroundColor="White" CornerRadius="18" MaximumWidthRequest="570"
-               Margin="20,20,20,0" Padding="0" HeightRequest="470" BorderColor="Transparent" x:Name="FrameChart">
+            <Frame BackgroundColor="White" CornerRadius="18" MaximumWidthRequest="500"
+               Margin="20,20,20,0" Padding="0" HeightRequest="540" BorderColor="Transparent" x:Name="FrameChart">
                 <StackLayout Padding="20">
                     <Image Source="fishtrader.jpeg" HeightRequest="50"/>
                     <Label Text="Seja bem vindo!" TextColor="#147287" FontSize="Medium" HeightRequest="50"
@@ -25,36 +25,41 @@
                     
                     <Frame HeightRequest="50" Margin="0,30,0,20" Padding="0" BackgroundColor="White">
                         <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <Label Background="#147287" Grid.Column="0"/>
-                            <Entry Grid.Column="1" TextColor="#147287"/>
+                            <StackLayout Background="#147287" Grid.Column="0">
+                                <Image Source="icone_usuario.png" HeightRequest="30" Margin="5"/>
+                            </StackLayout>
+                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtUsuario"/>
                         </Grid>
                     </Frame>
                     
                     <Frame HeightRequest="50" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
                         <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <Label Background="#147287" Grid.Column="0"/>
-                            <Entry Grid.Column="1" TextColor="#147287"/>
+                            <StackLayout Background="#147287" Grid.Column="0">
+                                <Image Source="icone_email.png" HeightRequest="30" Margin="5"/>
+                            </StackLayout>
+                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtEmail"/>
                         </Grid>
                     </Frame>
 
                     <Frame HeightRequest="50" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
                         <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <Label Background="#147287" Grid.Column="0"/>
-                            <Entry Grid.Column="1" TextColor="#147287" IsPassword="True"/>
+                            <StackLayout Background="#147287" Grid.Column="0">
+                                <Image Source="icone_senha.png" HeightRequest="30" Margin="5"/>
+                            </StackLayout>
+                            <Entry Grid.Column="1" TextColor="#147287" IsPassword="True" x:Name="txtSenha"/>
                         </Grid>
                     </Frame>
 
                     <Button Text="Cadastrar-se" Background="#147287" BorderWidth="0" Margin="0,25,0,20" 
                         WidthRequest="200" CornerRadius="18" TextColor="White"
                         x:Name="btnCadastrar" Clicked = "btnCadastrar_Clicked"/>
-                    <Grid ColumnDefinitions="58*,42*">
+                    <Grid ColumnDefinitions="54*,46*">
                         <Label Text="Já tem cadastro?" Grid.Column="0" TextColor="#147287"
                            HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
                         <Button Text="Fazer login" Background="White" TextColor="#147287" Grid.Column="1"
                                 HorizontalOptions="Start" VerticalOptions="Center" Padding="10" FontAttributes="Bold"
                                 x:Name="btnLogin" Clicked="btnLogin_Clicked"/>
-                    </Grid>
-                    
+                    </Grid>                    
                 </StackLayout>
             </Frame>
         </VerticalStackLayout>

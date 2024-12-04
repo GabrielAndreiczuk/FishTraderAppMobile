@@ -21,18 +21,25 @@
                            FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
                            Margin="0,10,0,0"/>
                     <Label Text="Por favor informe seus dados abaixo" TextColor="#147287" FontSize="Default"
-                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                    <Frame HeightRequest="50" Margin="0,30,0,20" Padding="0" BackgroundColor="White">
-                        <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <Label Background="#147287" Grid.Column="0"/>
-                            <Entry Grid.Column="1" TextColor="#147287"/>
+                           VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                           Margin="0,0,0,40"/>
+                    
+                    <Frame HeightRequest="40" Margin="0,0,0,25" Padding="0" BackgroundColor="White">
+                        <Grid  ColumnDefinitions="40,*" HeightRequest="40" HorizontalOptions="FillAndExpand">
+                            <StackLayout Background="#147287" Grid.Column="0">
+                                <Image Source="icone_usuario.png" HeightRequest="30" Margin="5"/>
+                            </StackLayout>
+                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtEmail"/>
                         </Grid>
                     </Frame>
                     
-                    <Frame HeightRequest="50" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
-                        <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <Label Background="#147287" Grid.Column="0"/>
-                            <Entry Grid.Column="1" TextColor="#147287" IsPassword="True"/>
+                    <Frame HeightRequest="40" Margin="0,0,0,25" Padding="0" BackgroundColor="White">
+                        <Grid  ColumnDefinitions="40,*" HeightRequest="40" HorizontalOptions="FillAndExpand">
+                            <StackLayout Background="#147287" Grid.Column="0" HorizontalOptions="Center">
+                                <Image Source="icone_senha.png" HeightRequest="30" Margin="5"/>
+                            </StackLayout>                            
+                            <Entry Grid.Column="1" TextColor="#147287" IsPassword="True" x:Name="txtSenha"
+                                   Background="White"/>
                         </Grid>
                     </Frame>
 

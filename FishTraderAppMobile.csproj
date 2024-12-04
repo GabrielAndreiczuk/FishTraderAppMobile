@@ -58,6 +58,9 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\fishtrader.jpeg" />
+	  <None Remove="Resources\Images\icone_email.png" />
+	  <None Remove="Resources\Images\icone_senha.png" />
+	  <None Remove="Resources\Images\icone_usuario.png" />
 	</ItemGroup>
 
 	<ItemGroup>

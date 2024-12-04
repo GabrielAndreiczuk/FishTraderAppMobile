@@ -217,6 +217,15 @@
     <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\fishtrader.scale-100.jpeg">
       <PackagePath>fishtrader.scale-100.jpeg</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\icone_email.scale-100.png">
+      <PackagePath>icone_email.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\icone_senha.scale-100.png">
+      <PackagePath>icone_senha.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\icone_usuario.scale-100.png">
+      <PackagePath>icone_usuario.scale-100.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\FishTraderAppMobile.deps.json">
       <PackagePath>FishTraderAppMobile.deps.json</PackagePath>
     </AppxPackagedFile>
