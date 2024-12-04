@@ -23,30 +23,31 @@
                     <Label Text="Crie sua conta preenchendo os dados abaixo." TextColor="#147287" FontSize="Default"
                        VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                     
-                    <Frame HeightRequest="50" Margin="0,30,0,20" Padding="0" BackgroundColor="White">
-                        <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
+                    <Frame HeightRequest="40" Margin="0,40,0,20" Padding="0" BackgroundColor="White">
+                        <Grid  ColumnDefinitions="40,*" HeightRequest="40" HorizontalOptions="FillAndExpand">
                             <StackLayout Background="#147287" Grid.Column="0">
                                 <Image Source="icone_usuario.png" HeightRequest="30" Margin="5"/>
                             </StackLayout>
-                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtUsuario"/>
+                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtUsuario" Placeholder="Nome"/>
                         </Grid>
                     </Frame>
                     
-                    <Frame HeightRequest="50" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
-                        <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <StackLayout Background="#147287" Grid.Column="0">
+                    <Frame HeightRequest="40" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
+                        <Grid  ColumnDefinitions="40,*" HeightRequest="40" HorizontalOptions="FillAndExpand">
+                            <StackLayout Background="#147287" Grid.Column="0" >
                                 <Image Source="icone_email.png" HeightRequest="30" Margin="5"/>
                             </StackLayout>
-                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtEmail"/>
+                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtEmail" Placeholder="Email"/>
                         </Grid>
                     </Frame>
 
-                    <Frame HeightRequest="50" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
-                        <Grid  ColumnDefinitions="50,*" HeightRequest="50" HorizontalOptions="FillAndExpand">
-                            <StackLayout Background="#147287" Grid.Column="0">
-                                <Image Source="icone_senha.png" HeightRequest="30" Margin="5"/>
+                    <Frame HeightRequest="40" Margin="0,0,0,20" Padding="0" BackgroundColor="White">
+                        <Grid  ColumnDefinitions="40,*" HeightRequest="40" HorizontalOptions="FillAndExpand">
+                            <StackLayout Background="#147287" Grid.Column="0" >
+                                <Image Source="icone_senha.png" HeightRequest="25" Margin="0,7,7,0"/>
                             </StackLayout>
-                            <Entry Grid.Column="1" TextColor="#147287" IsPassword="True" x:Name="txtSenha"/>
+                            <Entry Grid.Column="1" TextColor="#147287" IsPassword="True" x:Name="txtSenha"
+                                   Placeholder="Senha"/>
                         </Grid>
                     </Frame>
 

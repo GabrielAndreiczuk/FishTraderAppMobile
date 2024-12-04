@@ -29,17 +29,17 @@
                             <StackLayout Background="#147287" Grid.Column="0">
                                 <Image Source="icone_usuario.png" HeightRequest="30" Margin="5"/>
                             </StackLayout>
-                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtEmail"/>
+                            <Entry Grid.Column="1" TextColor="#147287" x:Name="txtEmail" Placeholder="Email"/>
                         </Grid>
                     </Frame>
                     
                     <Frame HeightRequest="40" Margin="0,0,0,25" Padding="0" BackgroundColor="White">
                         <Grid  ColumnDefinitions="40,*" HeightRequest="40" HorizontalOptions="FillAndExpand">
-                            <StackLayout Background="#147287" Grid.Column="0" HorizontalOptions="Center">
-                                <Image Source="icone_senha.png" HeightRequest="30" Margin="5"/>
+                            <StackLayout Background="#147287" Grid.Column="0" >
+                                <Image Source="icone_senha.png" HeightRequest="25" Margin="0,7,7,0"/>
                             </StackLayout>                            
                             <Entry Grid.Column="1" TextColor="#147287" IsPassword="True" x:Name="txtSenha"
-                                   Background="White"/>
+                                   Placeholder="Senha"/>
                         </Grid>
                     </Frame>
 
