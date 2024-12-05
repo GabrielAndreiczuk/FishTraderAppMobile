@@ -315,3 +315,7 @@ C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-m
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-maccatalyst\maccatalyst-x64\libHarfBuzzSharp.framework.zip
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\fishtrader.jpeg
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\bin\Debug\net8.0-maccatalyst\maccatalyst-x64\Plugin.LocalNotification.dll
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\icone_senha.png
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\icone_usuario.png
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\icone_email.png
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-maccatalyst\maccatalyst-x64\FishTraderAppMobile.sourcelink.json

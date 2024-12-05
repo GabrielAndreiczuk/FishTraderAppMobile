@@ -1143,3 +1143,7 @@ C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-a
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\app_shared_libraries\armeabi-v7a\libxamarin-app.so
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\app_shared_libraries\x86\libxamarin-app.so
 C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\app_shared_libraries\x86_64\libxamarin-app.so
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\resizetizer\r\drawable\icone_email.png
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\resizetizer\r\drawable\icone_senha.png
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\resizetizer\r\drawable\icone_usuario.png
+C:\Users\Pichau\Documents\Dev\Fish Trader\FishTraderAppMobile\obj\Debug\net8.0-android\FishTraderAppMobile.sourcelink.json

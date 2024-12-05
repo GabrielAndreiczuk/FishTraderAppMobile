@@ -20,12 +20,15 @@ using System;
 
 namespace FishTraderAppMobile
 {
+    /// <summary>
+    /// Página pricipal do aplicativo.
+    /// </summary>
     public partial class MainPage : ContentPage
     {
-        //STRING PARA CONEXÃO COM O BANCO DE DADOS
+        //String para conexão com o banco de dados
         string connectionString = "Host=localhost;Username=postgres;Password=root;Database=TesteFishTrader";
 
-        //LISTAS DE ARMAZENAMENTO DE INFORMAÇÕES        
+        //Listas para armazenamento local de dados       
         public List<string> mesesLista = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         public List<string> mesesListaAbv = ["jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."];
         public List<string> semanasLista = new List<string>();
@@ -48,26 +51,30 @@ namespace FishTraderAppMobile
         {
             InitializeComponent();
 
-            //CHAMADA DE MÉTODO QUE PEDE PERMISSÃO DE NOTIFICAÇÃO AO USUÁRIO
+            //Chamada do método que verifica a permissão de recebimento de notificações
             VerificarPerm();
 
-            //CHAMADA MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
+            //Chamada do método que carrega informações do banco de dados
             CarregarDados(string.Empty);
+
+            //Chamada do método que gere média de indicadores
+            GerarIndicadores();
 
             for (int i = 1; i <= 52; i++)
             {
                 semanasLista.Add($"Semana {i.ToString()}");
             }
             pickerSemana.ItemsSource = semanasLista;
-            pickerMes.ItemsSource = mesesLista;
-
-            //CHAMADA MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
-            GerarIndicadores();            
-
+            pickerMes.ItemsSource = mesesLista;                      
+            
             viewModel = new MainPageViewModel();
-            //CHAMADA MÉTODO RESPONSÁVEL POR APLICAR INFORMAÇÕES AO GRÁFICO LIVECHARTS
+
+            //Chamada de método que configura gráfico BiomassaVsBiomassaEsperada
             BiomassaVsBiomassaEsp();
-            SobrevivenciaVsDias();            
+            //Chamada de método que configura gráfico SobrevivenciaVsDias
+            SobrevivenciaVsDias();     
+            
+            //Constrói um contexto para a viewModel
             BindingContext = viewModel;
 
             /*
@@ -96,6 +103,15 @@ namespace FishTraderAppMobile
         {
             CarregarDados(string.Empty);
         }
+        /// <summary>
+        /// Método acionado quando a seleção de 'pickerMes' é alterada.
+        /// </summary>
+        /// <param name="sender">Objeto que disparou o evento</param>
+        /// <param name="e">Informações adicionais</param>
+        /// <remarks>
+        /// Gera um filtro conforme seleção de 'pickerMes'.
+        /// Chama o método 'CarregarDados' passando o filtro como parâmetro.
+        /// </remarks>
         private void pickerMes_SelectedIndexChanged(object sender, EventArgs e)
         {
             //DisplayAlert("", mesesListaAbv[pickerMes.SelectedIndex], "OK");
@@ -104,10 +120,23 @@ namespace FishTraderAppMobile
         }
         private void pickerSemana_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
         }
 
-        //MÉTODO RESPONSÁVEL POR CARREGAR INFORMAÇÕES DO BANCO DE DADOS
+        /// <summary>
+        /// Carrega dados do banco de dados para as listas.
+        /// </summary>
+        /// <param name="filter">Filtro adicional para consulta SQL.</param>
+        /// <remarks>
+        /// Limpa os dados das listas que guardam dados para os gráficos.
+        /// Utiliza Npgql para conexão com banco de dados PostgreSQL.
+        /// Na primeira consulta carrega os dados de BiomassaBioEsperada para as listas 'biomassa','biomassaEsperada' e 'biomassaMeses'.
+        /// Na segunda consulta carrega os dados de SobrevivenciaDiaMes para as listas 'sobrevivencia','dias' e 'sobrevivenciaMeses'.
+        /// Após as consultas o método chama 'GerarIndicadores' para calcular as novas médias. 
+        /// </remarks>
+        /// <exception cref="Exception">
+        /// Lança uma exceção se houver falhas na conexão com o banco ou na execução da consulta.
+        /// </exception>
         private void CarregarDados(string filter)
         {
             biomassa.Clear();
@@ -164,7 +193,13 @@ namespace FishTraderAppMobile
             }
         }
 
-        //MÉTODO RESPONSÁVEL POR GERAR MÉDIA DE INDICADORES
+        /// <summary>
+        /// Método que calcula a média de indicadores.
+        /// </summary>
+        /// <remarks>
+        /// Utiliza o método Average para obter a média dos valores das listas 'biomassa' e 'sobrevivencia'.
+        /// Formata os valores e exibe nas Labels correspondentes
+        /// </remarks>
         private void GerarIndicadores()
         {
             string txtMedia = "";
@@ -176,6 +211,17 @@ namespace FishTraderAppMobile
             //txtMedia = MainPageViewModel.FormatCurrency(mediaBiomassa);
             lblSobrevivencia.Text = $"{mediaSobrevivencia:F1}";
         }
+
+        /// <summary>
+        /// Configura o gráfico de Biomassa versus Biomassa Esperada, com uma série de colunas e linhas.
+        /// </summary>
+        ///<remarks>
+        /// Utiliza a biblioteca LiveCharts para a geração dos gráficos.
+        /// Recebe como valores da série de colunas os dados da lista 'biomassa' representando Biomassa.
+        /// Recebe como valores da série de linhas os dados da lista 'biomassaEsperada' representando BiomassaEsperada.
+        /// A configuração do eixo X é feita com os dados da lista 'biomassaMeses'.
+        /// É registrado um evento de clique nas colunas do gráfico, que acionará a funcão 'BioVsBioEsp_Clicked'.
+        /// </remarks>
         private void BiomassaVsBiomassaEsp()
         {          
             var colunas = new ColumnSeries<double>
@@ -209,6 +255,17 @@ namespace FishTraderAppMobile
             viewModel.Series = new ISeries[] { colunas, linhas };
             colunas.ChartPointPointerDown += BioVsBioEsp_Clicked;
         }
+
+        /// <summary>
+        /// Configura o gráfico de Sobrevivência versus Dias, com uma série de colunas e linhas.
+        /// </summary>
+        /// <remarks>
+        /// Utiliza a biblioteca LiveCharts para a geração dos gráficos.
+        /// Recebe como valores da série de colunas os dados da lista 'dias' representando Dias.
+        /// Recebe como valores da série de linhas os dados da lista 'sobrevivencia' representando Sobrevivência.
+        /// A configuração do eixo X é feita com os dados da lista 'sobrevivenciaMeses'.
+        /// É registrado um evento de clique nas colunas do gráfico, que acionará a funcão 'SobrevivenciaDias_Clicked'.
+        /// </remarks>
         private void SobrevivenciaVsDias()
         {
             var colunas = new ColumnSeries<double>
@@ -242,7 +299,17 @@ namespace FishTraderAppMobile
             };
         }
 
-        //EVENTOS DE CLIQUE DOS GRÁFICOS
+        /// <summary>
+        /// Filtra seleção conforme a coluna selecionada no gráfico no evento de clique.
+        /// </summary>
+        /// <param name="chartView">Gráfico selecionado</param>
+        /// <param name="point">Ponto selecionado do gráfico</param>
+        /// /// <remarks>
+        /// Este método utiliza propriedade 'Coordinate' da biblioteca LiveCharts para obter da localização
+        /// do ponto selecionado. A partir do índice obtido, busca o nome correspondente na lista 'biomassaMeses'.
+        /// Cria um filtro com o mês selecionado.
+        /// Chama o método 'CarregarDados' e passa o parâmetro filtro para atualizar as informações dos gráficos.
+        /// </remarks>
         private void BioVsBioEsp_Clicked( IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
         {
             if (point?.Visual is null) return;            
@@ -251,11 +318,21 @@ namespace FishTraderAppMobile
             string[] coordenadaSplit = month.Split('(',',',')');
             int index = int.Parse(coordenadaSplit[1]);
 
-            string teste = biomassaMeses[index];
-
             string filtro = $" WHERE \"mes_nome\" = '{biomassaMeses[index]}'";
             CarregarDados(filtro);       
         }
+
+        /// <summary>
+        /// Filtra seleção conforme a coluna selecionada no gráfico no evento de clique.
+        /// </summary>
+        /// <param name="chartView">Gráfico selecionado</param>
+        /// <param name="point">Ponto selecionado do gráfico</param>
+        /// <remarks>
+        /// Este método utiliza propriedade 'Coordinate' da biblioteca LiveCharts para obter da localização
+        /// do ponto selecionado. A partir do índice obtido, busca o nome correspondente na lista 'sobrevivenciaMes'.
+        /// Cria um filtro com o mês selecionado.
+        /// Chama o método 'CarregarDados' e passa o parâmetro filtro para atualizar as informações dos gráficos.
+        /// </remarks>
         private void SobrevivenciaDias_Clicked(IChartView chartView, ChartPoint<double, RoundedRectangleGeometry, LabelGeometry>? point)
         {
             if (point?.Visual is null) return;
@@ -264,13 +341,17 @@ namespace FishTraderAppMobile
             string[] coordenadaSplit = month.Split('(', ',', ')');
             int index = int.Parse(coordenadaSplit[1]);
 
-            string teste = sobrevivenciaMeses[index];
-
             string filtro = $" WHERE \"mes_nome\" = '{sobrevivenciaMeses[index]}'";
             CarregarDados(filtro);          
         }
         
-        //MÉTODO QUE VERIFICA PERMISSÃO DE NOTIFICAÇÃO AO USUÁRIO
+        /// <summary>
+        /// Verifica permissão de recebimento de notificação.
+        /// </summary>
+        /// <remarks>
+        /// Utiliza o sistema de permissões para verificar se o aplicativo possui
+        /// permissão para exibir notificações.
+        /// </remarks>
         private async void VerificarPerm()
         {
             var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
@@ -279,6 +360,18 @@ namespace FishTraderAppMobile
                 status = await Permissions.RequestAsync<Permissions.PostNotifications>();
             }
         }
+
+        /// <summary>
+        /// Compara dados atuais do banco de dados com dados obtidos anteriormente.
+        /// Envia notificações caso valores ultrapassem limites específicos.
+        /// </summary>
+        /// <remarks>
+        /// Utiliza Npgsql para conexão com banco de dados PostgreSQL.
+        /// Faz uma consulta nas tabelas e compara com dados guardados nas listas de armazenamento.
+        /// </remarks>
+        /// /// <exception cref="Exception">
+        /// Lança uma exceção se houver falhas na conexão com o banco ou na execução da consulta.
+        /// </exception>
         private async void CheckForDataChanges()
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -326,10 +419,19 @@ namespace FishTraderAppMobile
                 }
                 catch (Exception ex)
                 {
-
+                    DisplayAlert("Erro!", ex.Message, "OK");
                 }
             }
         }
+
+        /// <summary>
+        /// Configura e exibe uma notificação local.
+        /// </summary>
+        /// <param name="msg">Mensagem a ser exibida na descrição da notificação</param>
+        /// <remarks>
+        /// Utiliza a biblioteca Plugin.LocalNotification;
+        /// Exibe a notificação em 5 segundos 
+        /// </remarks>
         private void Notificar(string msg)
         {
             //CONFIGURAÇÃO DE NOTIFICAÇÕES
@@ -349,9 +451,7 @@ namespace FishTraderAppMobile
                     IconSmallName = { ResourceName = "fishtrader" },
                     //IconSmallName = Plugin.LocalNotification.AndroidOption.AndroidIcon("appicon")
                 }
-
             };
-
             LocalNotificationCenter.Current.Show(notificacao);
         }
     }

@@ -4,5 +4,42 @@
         <name>FishTraderAppMobile</name>
     </assembly>
     <members>
+        <member name="M:FishTraderAppMobile.MainPage.CarregarDados(System.String)">
+            <summary>
+            Método responsável por carregar informações do banco de dados.
+            </summary>
+            <param name="filter">Filtro para consulta.</param>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.GerarIndicadores">
+            <summary>
+            Método que gera média de indicadores.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.BiomassaVsBiomassaEsp">
+            <summary>
+            Método dedicado à geração do gráfico de Biomassa Vs Biomassa Esperada.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.SobrevivenciaVsDias">
+            <summary>
+            Método dedicado à geração do gráfico de Sobrevivência Vs Dias.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.VerificarPerm">
+            <summary>
+            Verifica permissão de recebimento de notificação.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.CheckForDataChanges">
+            <summary>
+            Verifica mudanças de dados informados com o banco de dados.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.Notificar(System.String)">
+            <summary>
+            Envia notificações para o dispositivo.
+            </summary>
+            <param name="msg">Mensagem da notificação</param>
+        </member>
     </members>
 </doc>
