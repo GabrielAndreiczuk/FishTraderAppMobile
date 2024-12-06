@@ -2,7 +2,9 @@ using Microsoft.Maui.ApplicationModel.Communication;
 using Npgsql;
 
 namespace FishTraderAppMobile;
-
+/// <summary>
+/// Página de login do aplicativo.
+/// </summary>
 public partial class Login : ContentPage
 {
     string connectionString = "Host=localhost;Username=postgres;Password=root;Database=TesteFishTrader";
@@ -18,16 +20,15 @@ public partial class Login : ContentPage
     /// <param name="sender">O objeto que disparou o evento</param>
     /// <param name="e">Informações adicionais</param>
     /// <remarks>
-    /// O método recebe em variáveis 'email' e 'senha' os valores de 'txtEmail' e 'txtSenha' respectivamente.
-    /// Realiza uma consulta na tabela 'Usuario' através da biblioteca Npgsql em um banco de dados PostgreSQL.
-    /// Compara se existe cadastrado no banco dados iguais aos inseridos nas textbox.
+    /// O método obtem os valores de 'txtEmail' e 'txtSenha' e realiza uma consulta na tabela 'Usuario' 
+    /// através da biblioteca Npgsql em um banco de dados PostgreSQL.
+    /// Verifica se existe registros no banco dados iguais aos valores inseridos.
     /// Caso as informações sejam verdadeiras altera a propriedade de <c>App.Current.MainPage</c>, que recebe uma
-    /// nova instância de MainPage.
-    /// Substitui a página atual pela nova página.
+    /// nova instância de <c>MainPage</c>,substituindo a página atual pela nova página.
     /// </remarks>
     /// <exception cref="Exception">
-    /// Dispara uma excessão caso haja algum erro de conexão com o banco de dados.
-    /// Dispara uma excesão caso as informações de login não estejam corretas.
+    /// Dispara uma excessão caso haja algum erro de conexão com o banco de dados ou caso as 
+    /// informações de login não estejam corretas.
     /// </exception>
     private void btnEntrar_Clicked(object sender, EventArgs e)
     {
