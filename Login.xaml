@@ -53,6 +53,10 @@
                                 HorizontalOptions="Start" VerticalOptions="Center" Padding="10" FontAttributes="Bold"
                                 x:Name="btnCadastro" Clicked="btnCadastro_Clicked"/>
                     </Grid>
+                    <Button Text="Consultar API"
+                            Clicked="OnConsultarApiClicked"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
                 </StackLayout>
             </Frame>
         </VerticalStackLayout>

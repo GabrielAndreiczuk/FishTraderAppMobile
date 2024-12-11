@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\cadastro.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|solutionrelative:cadastro.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\login.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|solutionrelative:login.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|solutionrelative:login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\cadastro.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|solutionrelative:cadastro.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\cadastro.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|solutionrelative:mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|solutionrelative:login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1EF3AC5F-E40B-4816-908A-113D8BD1D147}|FishTraderAppMobile.csproj|c:\\users\\pichau\\documents\\dev\\fish trader\\fishtraderappmobile\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -50,12 +50,11 @@
               "RelativeToolTip": "App.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T14:35:25.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T14:35:25.347Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Cadastro.xaml",
               "DocumentMoniker": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Cadastro.xaml",
               "RelativeDocumentMoniker": "Cadastro.xaml",
@@ -63,44 +62,41 @@
               "RelativeToolTip": "Cadastro.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-03T12:40:58.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T12:40:58.282Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Cadastro.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Cadastro.xaml.cs",
               "RelativeDocumentMoniker": "Cadastro.xaml.cs",
               "ToolTip": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Cadastro.xaml.cs",
               "RelativeToolTip": "Cadastro.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T00:12:35.852Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-04T00:12:35.852Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Login.xaml",
               "DocumentMoniker": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Login.xaml",
               "RelativeDocumentMoniker": "Login.xaml",
               "ToolTip": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Login.xaml",
               "RelativeToolTip": "Login.xaml",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACUAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADoAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-03T12:41:54.911Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T12:41:54.911Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Login.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Login.xaml.cs",
               "RelativeDocumentMoniker": "Login.xaml.cs",
               "ToolTip": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\Login.xaml.cs",
               "RelativeToolTip": "Login.xaml.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBkAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAADwv2cAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-03T19:40:28.053Z",
               "EditorCaption": ""
@@ -119,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Pichau\\Documents\\Dev\\Fish Trader\\FishTraderAppMobile\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "MainPage.xaml.cs",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "MainPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-01T15:07:32.409Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-01T15:07:32.409Z"
             }
           ]
         }

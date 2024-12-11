@@ -90,5 +90,39 @@ public partial class Login : ContentPage
     private void btnCadastro_Clicked(object sender, EventArgs e)
     {
         App.Current.MainPage = new Cadastro();
-    }    
+    }
+
+    private async void OnConsultarApiClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            //string url = "http://localhost:7114/api/v2/biomassa";
+            string url = "http://192.168.100.9:7114/api/v2/biomassa";
+
+            // Configura o HttpClient
+            using HttpClient client = new HttpClient();
+
+            // Faz a requisição GET
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Lê a resposta como string
+                string result = await response.Content.ReadAsStringAsync();
+
+                // Exibe o resultado (exemplo: em um DisplayAlert)
+                await DisplayAlert("Sucesso", $"Resposta da API: {result}", "OK");
+            }
+            else
+            {
+                // Em caso de erro na resposta
+                await DisplayAlert("Erro", $"Falha na requisição: {response.StatusCode}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Trata possíveis exceções, como falha de conexão
+            await DisplayAlert("Erro", $"Erro ao consultar API: {ex.Message}", "OK");
+        }
+    }
 }

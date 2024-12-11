@@ -4,42 +4,199 @@
         <name>FishTraderAppMobile</name>
     </assembly>
     <members>
+        <member name="T:FishTraderAppMobile.Cadastro">
+            <summary>
+            Página de cadastro do aplicativo.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.Cadastro.btnCadastrar_Clicked(System.Object,System.EventArgs)">
+            <summary>
+            Cadastra um novo usuário no aplicativo.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>
+            Obtém os valores de 'txtUsuario', 'txtEmail' e 'txtSenha' e insere os dados na tabela 'Usuario' 
+            de um banco de dados PostgreSQL, utilizando a biblioteca npgsql.
+            Após o registro, armazena o nome do usuário na propriedade <c>SecureStorage</c>.
+            Altera a propriedade de <c>App.Current.MainPage</c>, que recebe uma
+            nova instância de <c>MainPage</c>,substituindo a página atual pela nova página.
+            </remarks>
+            <exception cref="T:System.Exception">
+            Dispara uma excessão caso haja um erro de conexão com o banco de dados.
+            </exception>
+        </member>
+        <member name="M:FishTraderAppMobile.Cadastro.btnLogin_Clicked(System.Object,System.EventArgs)">
+            <summary>
+            Redireciona o usuário para a tela de Login.
+            </summary>
+            <param name="sender">Objeto que disparou o evento</param>
+            <param name="e">Informações adicionais</param>
+            <remarks>
+            O método atualiza a página atual do aplicativo para a tela 'Login'.
+            O método altera a propriedade <c>App.Current.MainPage</c>, que recebe uma instância
+            de <c>Login</c>.
+            Substitui a página atual pela nova página.
+            </remarks>
+        </member>
+        <member name="T:FishTraderAppMobile.Login">
+            <summary>
+            Página de login do aplicativo.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.Login.btnEntrar_Clicked(System.Object,System.EventArgs)">
+            <summary>
+            Verifica o login do usuário.
+            </summary>
+            <param name="sender">O objeto que disparou o evento</param>
+            <param name="e">Informações adicionais</param>
+            <remarks>
+            O método obtem os valores de 'txtEmail' e 'txtSenha' e realiza uma consulta na tabela 'Usuario' 
+            através da biblioteca Npgsql em um banco de dados PostgreSQL.
+            Verifica se existe registros no banco dados iguais aos valores inseridos.
+            Caso as informações sejam verdadeiras altera a propriedade de <c>App.Current.MainPage</c>, que recebe uma
+            nova instância de <c>MainPage</c>,substituindo a página atual pela nova página.
+            </remarks>
+            <exception cref="T:System.Exception">
+            Dispara uma excessão caso haja algum erro de conexão com o banco de dados ou caso as 
+            informações de login não estejam corretas.
+            </exception>
+        </member>
+        <member name="M:FishTraderAppMobile.Login.btnCadastro_Clicked(System.Object,System.EventArgs)">
+            <summary>
+            Redireciona o usuário para a tela de cadastro.
+            </summary>
+            <param name="sender">Objeto que disparou o evento</param>
+            <param name="e">Informações adicionais</param>
+            <remarks>
+            O método atualiza a página atual do aplicativo para a tela 'Cadastro'.
+            O método altera a propriedade <c>App.Current.MainPage</c>, que recebe uma instância
+            de Cadastro.
+            Substitui a página atual pela nova página.
+            </remarks>
+        </member>
+        <member name="T:FishTraderAppMobile.MainPage">
+            <summary>
+            Página pricipal do aplicativo.
+            </summary>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.pickerMes_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            Método acionado quando a seleção de 'pickerMes' é alterada.
+            </summary>
+            <param name="sender">Objeto que disparou o evento</param>
+            <param name="e">Informações adicionais</param>
+            <remarks>
+            Gera um filtro conforme seleção de 'pickerMes'.
+            Chama o método 'CarregarDados' passando o filtro como parâmetro.
+            </remarks>
+        </member>
         <member name="M:FishTraderAppMobile.MainPage.CarregarDados(System.String)">
             <summary>
-            Método responsável por carregar informações do banco de dados.
+            Carrega dados do banco de dados para as listas.
             </summary>
-            <param name="filter">Filtro para consulta.</param>
+            <param name="filter">Filtro adicional para consulta SQL.</param>
+            <remarks>
+            Limpa os dados das listas que guardam dados para os gráficos.
+            Utiliza Npgql para conexão com banco de dados PostgreSQL.
+            Na primeira consulta carrega os dados de BiomassaBioEsperada para as listas 'biomassa','biomassaEsperada' e 'biomassaMeses'.
+            Na segunda consulta carrega os dados de SobrevivenciaDiaMes para as listas 'sobrevivencia','dias' e 'sobrevivenciaMeses'.
+            Após as consultas o método chama 'GerarIndicadores' para calcular as novas médias. 
+            </remarks>
+            <exception cref="T:System.Exception">
+            Lança uma exceção se houver falhas na conexão com o banco ou na execução da consulta.
+            </exception>
         </member>
         <member name="M:FishTraderAppMobile.MainPage.GerarIndicadores">
             <summary>
-            Método que gera média de indicadores.
+            Método que calcula a média de indicadores.
             </summary>
+            <remarks>
+            Utiliza o método Average para obter a média dos valores das listas 'biomassa' e 'sobrevivencia'.
+            Formata os valores e exibe nas Labels correspondentes
+            </remarks>
         </member>
         <member name="M:FishTraderAppMobile.MainPage.BiomassaVsBiomassaEsp">
-            <summary>
-            Método dedicado à geração do gráfico de Biomassa Vs Biomassa Esperada.
-            </summary>
+             <summary>
+             Configura o gráfico de Biomassa versus Biomassa Esperada, com uma série de colunas e linhas.
+             </summary>
+            <remarks>
+             Utiliza a biblioteca LiveCharts para a geração dos gráficos.
+             Recebe como valores da série de colunas os dados da lista 'biomassa' representando Biomassa.
+             Recebe como valores da série de linhas os dados da lista 'biomassaEsperada' representando BiomassaEsperada.
+             A configuração do eixo X é feita com os dados da lista 'biomassaMeses'.
+             É registrado um evento de clique nas colunas do gráfico, que acionará a funcão 'BioVsBioEsp_Clicked'.
+             </remarks>
         </member>
         <member name="M:FishTraderAppMobile.MainPage.SobrevivenciaVsDias">
             <summary>
-            Método dedicado à geração do gráfico de Sobrevivência Vs Dias.
+            Configura o gráfico de Sobrevivência versus Dias, com uma série de colunas e linhas.
             </summary>
+            <remarks>
+            Utiliza a biblioteca LiveCharts para a geração dos gráficos.
+            Recebe como valores da série de colunas os dados da lista 'dias' representando Dias.
+            Recebe como valores da série de linhas os dados da lista 'sobrevivencia' representando Sobrevivência.
+            A configuração do eixo X é feita com os dados da lista 'sobrevivenciaMeses'.
+            É registrado um evento de clique nas colunas do gráfico, que acionará a funcão 'SobrevivenciaDias_Clicked'.
+            </remarks>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.BioVsBioEsp_Clicked(LiveChartsCore.Kernel.Sketches.IChartView,LiveChartsCore.Kernel.ChartPoint{System.Double,LiveChartsCore.SkiaSharpView.Drawing.Geometries.RoundedRectangleGeometry,LiveChartsCore.SkiaSharpView.Drawing.Geometries.LabelGeometry})">
+            <summary>
+            Filtra seleção conforme a coluna selecionada no gráfico no evento de clique.
+            </summary>
+            <param name="chartView">Gráfico selecionado</param>
+            <param name="point">Ponto selecionado do gráfico</param>
+            /// <remarks>
+            Este método utiliza propriedade 'Coordinate' da biblioteca LiveCharts para obter da localização
+            do ponto selecionado. A partir do índice obtido, busca o nome correspondente na lista 'biomassaMeses'.
+            Cria um filtro com o mês selecionado.
+            Chama o método 'CarregarDados' e passa o parâmetro filtro para atualizar as informações dos gráficos.
+            </remarks>
+        </member>
+        <member name="M:FishTraderAppMobile.MainPage.SobrevivenciaDias_Clicked(LiveChartsCore.Kernel.Sketches.IChartView,LiveChartsCore.Kernel.ChartPoint{System.Double,LiveChartsCore.SkiaSharpView.Drawing.Geometries.RoundedRectangleGeometry,LiveChartsCore.SkiaSharpView.Drawing.Geometries.LabelGeometry})">
+            <summary>
+            Filtra seleção conforme a coluna selecionada no gráfico no evento de clique.
+            </summary>
+            <param name="chartView">Gráfico selecionado</param>
+            <param name="point">Ponto selecionado do gráfico</param>
+            <remarks>
+            Este método utiliza propriedade 'Coordinate' da biblioteca LiveCharts para obter da localização
+            do ponto selecionado. A partir do índice obtido, busca o nome correspondente na lista 'sobrevivenciaMes'.
+            Cria um filtro com o mês selecionado.
+            Chama o método 'CarregarDados' e passa o parâmetro filtro para atualizar as informações dos gráficos.
+            </remarks>
         </member>
         <member name="M:FishTraderAppMobile.MainPage.VerificarPerm">
             <summary>
             Verifica permissão de recebimento de notificação.
             </summary>
+            <remarks>
+            Utiliza o sistema de permissões para verificar se o aplicativo possui
+            permissão para exibir notificações.
+            </remarks>
         </member>
         <member name="M:FishTraderAppMobile.MainPage.CheckForDataChanges">
             <summary>
-            Verifica mudanças de dados informados com o banco de dados.
+            Compara dados atuais do banco de dados com dados obtidos anteriormente.
+            Envia notificações caso valores ultrapassem limites específicos.
             </summary>
+            <remarks>
+            Utiliza Npgsql para conexão com banco de dados PostgreSQL.
+            Faz uma consulta nas tabelas e compara com dados guardados nas listas de armazenamento.
+            </remarks>
+            /// <exception cref="T:System.Exception">
+            Lança uma exceção se houver falhas na conexão com o banco ou na execução da consulta.
+            </exception>
         </member>
         <member name="M:FishTraderAppMobile.MainPage.Notificar(System.String)">
             <summary>
-            Envia notificações para o dispositivo.
+            Configura e exibe uma notificação local.
             </summary>
-            <param name="msg">Mensagem da notificação</param>
+            <param name="msg">Mensagem a ser exibida na descrição da notificação</param>
+            <remarks>
+            Utiliza a biblioteca Plugin.LocalNotification;
+            Exibe a notificação em 5 segundos 
+            </remarks>
         </member>
     </members>
 </doc>
