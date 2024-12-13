@@ -72,7 +72,7 @@ namespace FishTraderAppMobile
             //Chamada de método que configura gráfico BiomassaVsBiomassaEsperada
             BiomassaVsBiomassaEsp();
             //Chamada de método que configura gráfico SobrevivenciaVsDias
-            SobrevivenciaVsDias();     
+            SobrevivenciaVsDias();    
             
             //Constrói um contexto para a viewModel
             BindingContext = viewModel;

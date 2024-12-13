@@ -30,11 +30,29 @@ public partial class Login : ContentPage
     /// Dispara uma excessão caso haja algum erro de conexão com o banco de dados ou caso as 
     /// informações de login não estejam corretas.
     /// </exception>
-    private void btnEntrar_Clicked(object sender, EventArgs e)
+    private async void btnEntrar_Clicked(object sender, EventArgs e)
     {
         string email = txtEmail.Text;
         string senha = txtSenha.Text;
 
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(senha))
+        {
+            await DisplayAlert("Erro!", "Preencha todos os campos!", "OK");
+            return;
+        }
+
+        var apiService = new ApiService();
+        var isLoginSuccessful = await apiService.LoginAsync(email, senha);
+
+        if (isLoginSuccessful)
+        {
+            DisplayAlert("Sucesso", "Login Realizado com sucesso!", "OK");
+        }
+        else
+        {
+            DisplayAlert("Erro", "Email ou senha inválidos.", "OK");
+        }
+        /*
         using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
         {
             try
@@ -73,7 +91,7 @@ public partial class Login : ContentPage
 
                 DisplayAlert("", ex.Message, "OK");
             }
-        }
+        }*/
     }
 
     /// <summary>

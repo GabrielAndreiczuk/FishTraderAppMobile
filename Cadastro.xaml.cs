@@ -29,12 +29,31 @@ public partial class Cadastro : ContentPage
     /// <exception cref="Exception">
     /// Dispara uma excessão caso haja um erro de conexão com o banco de dados.
     /// </exception>
-    private void btnCadastrar_Clicked(object sender, EventArgs e)
+    private async void btnCadastrar_Clicked(object sender, EventArgs e)
     {
         string usuario = txtUsuario.Text;
         string email = txtEmail.Text;
         string senha = txtSenha.Text;
 
+        if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(senha))
+        {
+            DisplayAlert("Erro", "Preencha todos os campos!", "OK");
+        }
+
+        var apiService = new ApiService();
+        var isCadastroSuccessful = await apiService.CadastroAsync(usuario,email, senha);
+
+        if (isCadastroSuccessful)
+        {
+            DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
+        }
+        else
+        {
+            DisplayAlert("Erro", "Erro ao cadastrar o usuário!", "OK");
+        }
+            
+
+        /*
         using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
         {
             try
@@ -61,7 +80,7 @@ public partial class Cadastro : ContentPage
 
                 DisplayAlert("", ex.Message, "OK");
             }
-        }        
+        } */       
     }
 
     /// <summary>
